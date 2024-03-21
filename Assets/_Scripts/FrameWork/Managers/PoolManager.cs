@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : MonoBehaviour,IManager
 {
     //例
     //[SerializeField] ObjectPool[] enemyPools;
@@ -15,9 +15,13 @@ public class PoolManager : MonoBehaviour
     {
         DebugLogger.Log("Init PoolManager");
         dictionary = new Dictionary<GameObject, UnityObjectPool>();
-    
         //例
         //Initialize(enemyPools);
+    }
+
+    public void LogicUpdate()
+    {
+        
     }
 
     // Unityエディタでのみ実行されるデストラクタ。各プールのサイズを検証。

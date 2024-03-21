@@ -1,14 +1,18 @@
-using System.Collections;
 using System.Collections.Generic;
+using FrameWork.Factories;
 using UnityEngine;
 
+//MonoBehaviourを継承する意味がないかも
 public class GameApp : UnitySingleton<GameApp>
 {
+    [SerializeField] private List<IManager> _managers = new List<IManager>();
+
     public void InitGame()
     {
-      Debug.Log("Enter Game!");  
-      this.EnterMainScene();
+        Debug.Log("Enter Game!");
+        this.EnterMainScene();
     }
+
     /// <summary>
     /// ゲームシーンに入る
     /// </summary>
@@ -24,7 +28,14 @@ public class GameApp : UnitySingleton<GameApp>
 
         //UIの生成
         //UIManager.Instance.ShowUI("UIHome");
+    }
 
+    private void LogicUpdate()
+    {
+        for (var i = 0; i < _managers.Count; i++)
+        {
+            _managers[i].LogicUpdate();
+        }
     }
 
     /// <summary>
@@ -33,18 +44,14 @@ public class GameApp : UnitySingleton<GameApp>
     private void InitMgr()
     {
         //GeneratorPoolMgr();
-        
-    }
 
-    /// <summary>
-    /// PoolManagerを生成
-    /// </summary>
-    private void GeneratorPoolMgr()
-    {
-        GameObject poolMgr = new GameObject();
-        poolMgr.transform.parent = this.transform;
-        poolMgr.name = "PoolManager";
-        var component = poolMgr.AddComponent<PoolManager>();
-        component.Init();
+        _managers.Add(ManagerFactory.Instance.CreateManager<PoolManager>(this.transform));
+        _managers.Add(ManagerFactory.Instance.CreateManager<PlayerManager>(this.transform));
+        foreach (var manager in _managers)
+        {
+            DebugLogger.Log(manager.GetType().Name);
+        }
+        //..
+        //..
     }
 }

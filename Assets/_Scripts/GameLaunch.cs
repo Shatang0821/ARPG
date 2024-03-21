@@ -11,6 +11,8 @@ public class GameLaunch : UnitySingleton<GameLaunch>
         this.InitGameLogic();
     }
 
+    #region 初期化
+
     /// <summary>
     /// アップデートチェック
     /// </summary>
@@ -20,7 +22,7 @@ public class GameLaunch : UnitySingleton<GameLaunch>
         //ダウンロード情報
         //ローカルにダウンロード
     }
-    
+
     /// <summary>
     /// フレームワークを初期化
     /// </summary>
@@ -38,4 +40,8 @@ public class GameLaunch : UnitySingleton<GameLaunch>
         this.gameObject.AddComponent<GameApp>();
         GameApp.Instance.InitGame();
     }
+
+    #endregion
+    
+    
 }

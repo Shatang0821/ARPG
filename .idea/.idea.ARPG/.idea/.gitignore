@@ -2,10 +2,10 @@
 /shelf/
 /workspace.xml
 # Rider の無視対象ファイル
-/modules.xml
-/.idea.FrameWork.iml
 /contentModel.xml
+/modules.xml
 /projectSettingsUpdater.xml
+/.idea.ARPG.iml
 # エディターベースの HTTP クライアントリクエスト
 /httpRequests/
 # Datasource local storage ignored files
