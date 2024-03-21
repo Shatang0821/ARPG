@@ -4,10 +4,6 @@ namespace FrameWork.Manager
 {
     public class ResManager : UnitySingleton<ResManager>
     {
-        public override void Awake()
-        {
-            base.Awake();
-        }
 
         public T GetAssetCache<T>(string name) where T : UnityEngine.Object
         {

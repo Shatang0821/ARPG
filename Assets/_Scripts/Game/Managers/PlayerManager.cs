@@ -1,4 +1,5 @@
 ﻿using FrameWork.Manager;
+using FrameWork.Utils;
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour,IManager
@@ -10,8 +11,18 @@ public class PlayerManager : MonoBehaviour,IManager
         _player.SpawnPlayer(new Vector3(0,1,0));
     }
 
+    public void Enter()
+    {
+        _player.Init();
+    }
+
     public void LogicUpdate()
     {
-        
+        _player.LogicUpdate();
+    }
+
+    public void PhysicsUpdate()
+    {
+        _player.PhysicsUpdate();
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using FrameWork.Factories;
 using FrameWork.Manager;
@@ -7,8 +8,7 @@ using UnityEngine;
 //MonoBehaviourを継承する意味がないかも
 public class GameApp : UnitySingleton<GameApp>
 {
-    [SerializeField] private List<IManager> _managers = new List<IManager>();
-
+    private PlayerManager _playerManager;
     public void InitGame()
     {
         Debug.Log("Enter Game!");
@@ -32,12 +32,19 @@ public class GameApp : UnitySingleton<GameApp>
         //UIManager.Instance.ShowUI("UIHome");
     }
 
-    private void LogicUpdate()
+    private void Start()
     {
-        for (var i = 0; i < _managers.Count; i++)
-        {
-            _managers[i].LogicUpdate();
-        }
+        _playerManager.Enter();
+    }
+
+    private void Update()
+    {
+        _playerManager.LogicUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        _playerManager.PhysicsUpdate();
     }
 
     /// <summary>
@@ -47,13 +54,8 @@ public class GameApp : UnitySingleton<GameApp>
     {
         //GeneratorPoolMgr();
 
-        _managers.Add(ManagerFactory.Instance.CreateManager<PoolManager>(this.transform));
-        _managers.Add(ManagerFactory.Instance.CreateManager<PlayerManager>(this.transform));
-        foreach (var manager in _managers)
-        {
-            DebugLogger.Log(manager.GetType().Name);
-        }
-        //..
-        //..
+        ManagerFactory.Instance.CreateManager<PoolManager>(this.transform);
+        
+        _playerManager = ManagerFactory.Instance.CreateManager<PlayerManager>(this.transform);
     }
 }

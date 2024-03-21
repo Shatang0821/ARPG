@@ -12,7 +12,7 @@ namespace FrameWork.Factories
         /// <param name="parent">親の指定</param>
         /// <typeparam name="T">マネージャークラス</typeparam>
         /// <returns></returns>
-        public IManager CreateManager<T>(Transform parent) where T : Component, IManager
+        public T CreateManager<T>(Transform parent) where T : Component, IManager
         {
             GameObject gameObject = new GameObject(typeof(T).Name);
             gameObject.transform.parent = parent;
@@ -20,5 +20,6 @@ namespace FrameWork.Factories
             t.Init();
             return t;
         }
+
     }
 }

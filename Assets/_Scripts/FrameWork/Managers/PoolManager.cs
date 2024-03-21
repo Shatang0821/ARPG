@@ -22,11 +22,6 @@ namespace FrameWork.Manager
         //Initialize(enemyPools);
     }
 
-    public void LogicUpdate()
-    {
-        throw new System.NotImplementedException();
-    }
-
     // Unityエディタでのみ実行されるデストラクタ。各プールのサイズを検証。
     // 実際のゲームプレイでは実行されない。
 #if UNITY_EDITOR
