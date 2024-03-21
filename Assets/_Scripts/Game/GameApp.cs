@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using FrameWork.Factories;
+using FrameWork.Manager;
+using FrameWork.Utils;
 using UnityEngine;
 
 //MonoBehaviourを継承する意味がないかも

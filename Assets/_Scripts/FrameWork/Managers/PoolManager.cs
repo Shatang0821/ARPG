@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using FrameWork.PoolSystem;
+using FrameWork.Utils;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour,IManager
+namespace FrameWork.Manager
 {
+    public class PoolManager : MonoBehaviour, IManager
+    {
     //例
     //[SerializeField] ObjectPool[] enemyPools;
 
@@ -15,13 +17,14 @@ public class PoolManager : MonoBehaviour,IManager
     {
         DebugLogger.Log("Init PoolManager");
         dictionary = new Dictionary<GameObject, UnityObjectPool>();
+    
         //例
         //Initialize(enemyPools);
     }
 
     public void LogicUpdate()
     {
-        
+        throw new System.NotImplementedException();
     }
 
     // Unityエディタでのみ実行されるデストラクタ。各プールのサイズを検証。
@@ -185,4 +188,5 @@ public class PoolManager : MonoBehaviour,IManager
 #endif
         return dictionary[prefab].preparedObject(position, rotation, localScale);
     }
+}
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FrameWork.Manager;
+using UnityEngine;
 
 public class PlayerManager : MonoBehaviour,IManager
 {
