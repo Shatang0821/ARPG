@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PlayerMovementState : IState
 {
+    protected PlayerMovementStateMachine _stateMachine;
+
+    protected Vector2 _movementInput;
+    protected PlayerMovementState(PlayerMovementStateMachine playerMovementStateMachine)
+    {
+        this._stateMachine = playerMovementStateMachine;
+    }
+    
+
     public virtual void Enter()
     {
         DebugLogger.Log("State:" + GetType().Name);
@@ -14,12 +23,13 @@ public class PlayerMovementState : IState
         
     }
     
-    public virtual void LogicUpdate()
+    public virtual void HandleInput()
     {
-        
+        ReadMovementInput();
+        DebugLogger.Log(_movementInput);
     }
 
-    public virtual void HandleInput()
+    public virtual void LogicUpdate()
     {
         
     }
@@ -28,4 +38,11 @@ public class PlayerMovementState : IState
     {
         
     }
+
+    #region Main Methods
+    private void ReadMovementInput()
+    {
+        _movementInput = _stateMachine._player._input.Axis;
+    }
+    #endregion
 }

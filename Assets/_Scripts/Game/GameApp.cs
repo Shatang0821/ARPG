@@ -56,6 +56,7 @@ public class GameApp : UnitySingleton<GameApp>
 
         ManagerFactory.Instance.CreateManager<PoolManager>(this.transform);
         
-        _playerManager = ManagerFactory.Instance.CreateManager<PlayerManager>(this.transform);
+        _playerManager = (PlayerManager)ManagerFactory.Instance.CreateManager<PlayerManager>(this.transform);
+        
     }
 }
