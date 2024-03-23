@@ -30,6 +30,7 @@ public class GameLaunch : UnitySingleton<GameLaunch>
     {
         this.gameObject.AddComponent<ResManager>();
         this.gameObject.AddComponent<UIManager>();
+        //ManagerFactory.Instance.CreateManager<PoolManager>();
     }
 
     /// <summary>

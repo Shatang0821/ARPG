@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovementStateMachine : StateMachine
 {
-    public Player _player;
+    public Player Player { get; private set; }
     public PlayerIdleState IdleState { get; }
     public PlayerWalkState WalkState { get; }
     public PlayerRunState RunState { get; }
@@ -12,8 +12,7 @@ public class PlayerMovementStateMachine : StateMachine
 
     public PlayerMovementStateMachine(Player player)
     {
-        
-        this._player = player;
+        this.Player = player;
         IdleState = new PlayerIdleState(this);
 
         WalkState = new PlayerWalkState(this);
@@ -21,7 +20,5 @@ public class PlayerMovementStateMachine : StateMachine
         RunState = new PlayerRunState(this);
         
         SprintState = new PlayerSprintState(this);
-        
-        
     }
 }

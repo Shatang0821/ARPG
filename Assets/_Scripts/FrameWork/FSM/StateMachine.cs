@@ -15,6 +15,7 @@ namespace FrameWork.FSM
             currentState.Enter();
         }
 
+        // ReSharper disable Unity.PerformanceAnalysis
         public void HandleInput()
         {
             currentState?.HandleInput();
