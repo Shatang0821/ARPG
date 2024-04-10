@@ -28,9 +28,11 @@ public class GameLaunch : UnitySingleton<GameLaunch>
     /// </summary>
     private void InitFramework()
     {
-        this.gameObject.AddComponent<ResManager>();
-        this.gameObject.AddComponent<UIManager>();
-        //ManagerFactory.Instance.CreateManager<PoolManager>();
+        //this.gameObject.AddComponent<ResManager>();
+        //this.gameObject.AddComponent<UIManager>();
+        ManagerFactory.Instance.CreateManager<ResManager>();
+        ManagerFactory.Instance.CreateManager<UIManager>();
+        
     }
 
     /// <summary>

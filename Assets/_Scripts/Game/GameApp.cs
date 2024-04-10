@@ -53,9 +53,6 @@ public class GameApp : UnitySingleton<GameApp>
     private void InitMgr()
     {
         //GeneratorPoolMgr();
-
-        
         _playerManager = ManagerFactory.Instance.CreateManager<PlayerManager>();
-        
     }
 }

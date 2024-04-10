@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerManager : MonoBehaviour,IManager
 {
     private Player _player;
-    
     private PlayerMovementStateMachine _playerMovementStateMachine;
+    
     public void Init()
     {
         _player = new Player();
