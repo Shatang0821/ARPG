@@ -1,37 +1,56 @@
-﻿using FrameWork.Manager;
+﻿using System;
+using FrameWork.Manager;
 using UnityEngine;
 
-public class Player
+public class Player : MonoBehaviour
 {
-    private const string PREFABROOT = "Prefabs/Player/Player.prefab";
     private const string INPUTROOT = "Input/Player Input.asset";
     private const string PLYAERSOROOT = "ScriptableObjects/Characters/Player/Player.asset";
-    
-    private GameObject _playerPrefab;
     public Rigidbody Rigidbody { get; private set; }
     public PlayerInput Input { get; private set; }
-    
     public PlayerSO Data { get; private set; }
-    
     //カメラ
     public Transform MainCameraTransform { get; private set; }
-    public Player()
+    
+    private PlayerStateMachine _playerStateMachine;
+
+    private Animator _animator;
+    private void Awake()
     {
-        Input = ResManager.Instance.GetAssetCache<PlayerInput>(INPUTROOT);
+        Input = new PlayerInput();
         Data = ResManager.Instance.GetAssetCache<PlayerSO>(PLYAERSOROOT);
         if (Camera.main != null) MainCameraTransform = Camera.main.transform;
-
-        // プレファブを指定された位置と回転でインスタンス化
-        _playerPrefab = GameObject.Instantiate(ResManager.Instance.GetAssetCache<GameObject>(PREFABROOT), new Vector3(-99,-99,-99), Quaternion.identity);
         
-        Rigidbody = _playerPrefab.GetComponent<Rigidbody>();
-        
-        _playerPrefab.SetActive(false);
+        Rigidbody =GetComponent<Rigidbody>();
+        _animator = GetComponentInChildren<Animator>();
+        _playerStateMachine = new PlayerStateMachine(this,_animator);
+    }
+    
+    private void OnEnable()
+    {
+        Input.OnEnable();
     }
 
-    public void SpawnPlayer(Vector3 spawnPoint)
+    private void OnDisable()
     {
-        _playerPrefab.transform.position = spawnPoint;
-        _playerPrefab.SetActive(true);
+        Input.OnDisable();
+    }
+
+    private void Start()
+    {
+        _playerStateMachine.ChangeState(_playerStateMachine.IdleState);
+    }
+
+    
+
+    private void Update()
+    {
+        _playerStateMachine.HandleInput();
+        _playerStateMachine.LogicUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        _playerStateMachine.PhysicsUpdate();
     }
 }

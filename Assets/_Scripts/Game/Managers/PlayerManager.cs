@@ -1,33 +1,20 @@
-﻿using FrameWork.Manager;
+﻿using System;
+using FrameWork.Manager;
 using FrameWork.Utils;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour,IManager
+public class PlayerManager : MonoBehaviour
 {
     private Player _player;
-    private PlayerMovementStateMachine _playerMovementStateMachine;
-    
-    public void Init()
+    public bool IsSpawnPlayer;
+
+    private void Awake()
     {
-        _player = new Player();
-        _playerMovementStateMachine = new PlayerMovementStateMachine(_player);
         DebugLogger.Log("Init");
-        _player.SpawnPlayer(new Vector3(0,1,0));
+        if (IsSpawnPlayer)
+        {
+            GameObject.Instantiate(_player, Vector3.zero, Quaternion.identity);
+        }
     }
-
-    public void Enter()
-    {
-        _playerMovementStateMachine.ChangeState(_playerMovementStateMachine.IdleState);
-    }
-
-    public void LogicUpdate()
-    {
-        _playerMovementStateMachine.HandleInput();
-        _playerMovementStateMachine.LogicUpdate();
-    }
-
-    public void PhysicsUpdate()
-    {
-        _playerMovementStateMachine.PhysicsUpdate();
-    }
+    
 }

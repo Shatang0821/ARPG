@@ -1,48 +1,29 @@
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerGroundedState : PlayerMovementState
 {
-    protected PlayerGroundedState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
+    public PlayerGroundedState(string animName, PlayerStateMachine playerStateMachine, Animator animator) : base(animName, playerStateMachine, animator)
     {
     }
+    
+    
     
     #region Reusable Methods
-    
-    protected override void AddInputActionsCallbacks()
+
+    protected virtual void OnWalk()
     {
-        base.AddInputActionsCallbacks();
-        
-        _input._inputActions.Player.Movement.canceled += OnMovementCanceled;
+        _stateMachine.ChangeState(_stateMachine.WalkState);
     }
-    
-    protected override void RemoveInputActionsCallbacks()
-    {
-        base.RemoveInputActionsCallbacks();
-        
-        _input._inputActions.Player.Movement.canceled -= OnMovementCanceled;
-    }
-    
     protected virtual void OnMove()
     {
-        if (_stateMachine.ReusableData.ShouldWalk)
-        {
-            _stateMachine.ChangeState(_stateMachine.WalkState);
-            return;
-        }
-        
-        _stateMachine.ChangeState(_stateMachine.RunState);
+        _stateMachine.ChangeState(_stateMachine.SprintState);
     }
-    #endregion
-    
-    #region Input Methods
-    
-    /// <summary>
-    /// 移動入力の中止イベント
-    /// </summary>
-    /// <param name="context"></param>
-    protected virtual void OnMovementCanceled(InputAction.CallbackContext context)
+
+    protected virtual void OnIdle()
     {
         _stateMachine.ChangeState(_stateMachine.IdleState);
     }
     #endregion
+
 }

@@ -1,30 +1,33 @@
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
-public class PlayerWalkState : PlayerGroundedState
+
+public class PlayerWalkState : PlayerMovingState
 {
-    public PlayerWalkState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
+    public PlayerWalkState(string animName, PlayerStateMachine playerStateMachine, Animator animator) : base(
+        animName, playerStateMachine, animator)
     {
     }
 
-    #region Istate Methods
+    #region IState Methods
 
     public override void Enter()
     {
+        _animTransitionDuration = 0.1f;
         base.Enter();
 
         _stateMachine.ReusableData.MovementSpeedModifier = _movementData.WalkData.SpeedModifier;
     }
 
-    #endregion
-    
-    /// <summary>
-    /// 歩く状態から走る状態に切り替えたら
-    /// </summary>
-    /// <param name="context"></param>
-    protected override void OnWalkToggleStarted(InputAction.CallbackContext context)
+    public override void LogicUpdate()
     {
-        base.OnWalkToggleStarted(context);
-        
-        _stateMachine.ChangeState(_stateMachine.RunState);
+        base.LogicUpdate();
+
+        if (_stateMachine.ReusableData.MovementInput == Vector2.zero)
+        {
+            OnIdle();
+            return;
+        }
     }
+
+    #endregion
 }

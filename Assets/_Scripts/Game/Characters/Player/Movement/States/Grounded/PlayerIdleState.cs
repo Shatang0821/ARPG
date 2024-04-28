@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class PlayerIdleState : PlayerGroundedState
 {
-    public PlayerIdleState(PlayerMovementStateMachine playerMovementStateMachine) : base(playerMovementStateMachine)
+    public PlayerIdleState(string animName, PlayerStateMachine playerStateMachine, Animator animator) : base(animName, playerStateMachine, animator)
     {
     }
 
     #region IState Methods
     public override void Enter()
     {
+        _animTransitionDuration = 0.25f;
         base.Enter();
-
         
         _stateMachine.ReusableData.MovementSpeedModifier = 0f;
 
@@ -32,4 +32,6 @@ public class PlayerIdleState : PlayerGroundedState
 
     
     #endregion
+
+ 
 }
