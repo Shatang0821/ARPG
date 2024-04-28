@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "WalkToggle",
+                    "name": "Dash",
                     "type": "Button",
                     "id": "b8a17442-4cf0-4c35-a10b-282a10b217eb",
                     "expectedControlType": "Button",
@@ -112,11 +112,11 @@
                 {
                     "name": "",
                     "id": "58f9ff4f-bf02-4bd6-84b3-5a72f0b6ceaa",
-                    "path": "<Keyboard>/leftCtrl",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "WalkToggle",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

@@ -9,20 +9,26 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PlayerMovementState : IState
 {
-    protected PlayerMovementStateMachine _stateMachine;
+    protected PlayerStateMachine _stateMachine;
     protected PlayerInput _input;
     protected Rigidbody _rigidbody;
 
     protected PlayerGroundedData _movementData;
 
-    protected PlayerMovementState(PlayerMovementStateMachine playerMovementStateMachine)
+    protected int _animBoolHash;
+
+    protected float _animTransitionDuration;
+    protected Animator animator;
+
+    protected PlayerMovementState(string animName,PlayerStateMachine playerStateMachine,Animator animator)
     {
-        this._stateMachine = playerMovementStateMachine;
+        this._animBoolHash = Animator.StringToHash(animName);
+        this._stateMachine = playerStateMachine;
         _input = _stateMachine.Player.Input;
         _rigidbody = _stateMachine.Player.Rigidbody;
-
+        
         _movementData = _stateMachine.Player.Data.GroundedData;
-
+        this.animator = animator;
         InitializeData();
     }
 
@@ -39,13 +45,13 @@ public class PlayerMovementState : IState
     public virtual void Enter()
     {
         DebugLogger.Log("State:" + GetType().Name);
-
-        AddInputActionsCallbacks();
+        
+        animator.CrossFade(_animBoolHash,_animTransitionDuration);
     }
 
     public virtual void Exit()
     {
-        RemoveInputActionsCallbacks();
+        animator.SetBool(_animBoolHash,false);
     }
 
 
@@ -252,35 +258,6 @@ public class PlayerMovementState : IState
         _rigidbody.velocity = Vector3.zero;
     }
 
-    /// <summary>
-    /// 入力イベントの登録
-    /// </summary>
-    protected virtual void AddInputActionsCallbacks()
-    {
-        _input._inputActions.Player.WalkToggle.started += OnWalkToggleStarted;
-    }
-
-    /// <summary>
-    /// 入力イベントの解除
-    /// </summary>
-    protected virtual void RemoveInputActionsCallbacks()
-    {
-        _input._inputActions.Player.WalkToggle.started -= OnWalkToggleStarted;
-    }
-
     #endregion
-
-    #region Input Methods
-
-    /// <summary>
-    /// 歩く状態の切り替え
-    /// </summary>
-    /// <param name="context"></param>
-    protected virtual void OnWalkToggleStarted(InputAction.CallbackContext context)
-    {
-        _stateMachine.ReusableData.ShouldWalk = !_stateMachine.ReusableData.ShouldWalk;
-        Debug.Log(_stateMachine.ReusableData.ShouldWalk);
-    }
-
-    #endregion
+    
 }
