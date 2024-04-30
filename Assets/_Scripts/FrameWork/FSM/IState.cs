@@ -11,5 +11,11 @@ namespace FrameWork.FSM
         public void LogicUpdate();
         
         public void PhysicsUpdate();
+
+        public void OnAnimationEnterEvent();
+
+        public void OnAnimationExitEvent();
+
+        public void OnAnimationTransitionEvent();
     }
 }

@@ -46,12 +46,14 @@ public class PlayerMovementState : IState
     {
         DebugLogger.Log("State:" + GetType().Name);
         
-        animator.CrossFade(_animBoolHash,_animTransitionDuration);
+        animator.SetBool(_animBoolHash,true);
+        AddInputActionsCallbacks();
     }
 
     public virtual void Exit()
     {
         animator.SetBool(_animBoolHash,false);
+        RemoveInputActionsCallbacks();
     }
 
 
@@ -67,6 +69,21 @@ public class PlayerMovementState : IState
     public virtual void PhysicsUpdate()
     {
         Move();
+    }
+
+    public virtual void OnAnimationEnterEvent()
+    {
+        
+    }
+
+    public virtual void OnAnimationExitEvent()
+    {
+        
+    }
+
+    public virtual void OnAnimationTransitionEvent()
+    {
+        
     }
 
     #endregion
@@ -256,6 +273,22 @@ public class PlayerMovementState : IState
     protected void ResetVelocity()
     {
         _rigidbody.velocity = Vector3.zero;
+    }
+
+    /// <summary>
+    /// 入力イベントの登録
+    /// </summary>
+    protected virtual void AddInputActionsCallbacks()
+    {
+        
+    }
+
+    /// <summary>
+    /// 入力イベントの解除
+    /// </summary>
+    protected virtual void RemoveInputActionsCallbacks()
+    {
+        
     }
 
     #endregion

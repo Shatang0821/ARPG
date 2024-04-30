@@ -17,13 +17,10 @@ public class PlayerStateMachine : StateMachine
         ReusableData = new PlayerStateReusableData();
         IdleState = new PlayerIdleState("Idle",this,animator);
         
-        DashState = new PlayerDashState("Run",this,animator);
+        DashState = new PlayerDashState("Dash",this,animator);
         
-        SprintState = new PlayerSprintState("Run",this,animator);
+        SprintState = new PlayerSprintState("Sprint",this,animator);
 
         WalkState = new PlayerWalkState("Walk", this, animator);
-        
-        
-
     }
 }

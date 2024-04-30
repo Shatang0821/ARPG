@@ -3,8 +3,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerSprintState : PlayerMovingState
 {
+    private PlayerSprintData _sprintData;
+
+    private bool _keepSprinting;
+
+    private float _startTime;
     public PlayerSprintState(string animName, PlayerStateMachine playerStateMachine, Animator animator) : base(animName, playerStateMachine, animator)
     {
+        _sprintData = _movementData.SprintData;
     }
 
     #region IState Methods
@@ -12,22 +18,23 @@ public class PlayerSprintState : PlayerMovingState
     {
         _animTransitionDuration = 0.1f;
         base.Enter();
+        _startTime = Time.time; 
 
-        _stateMachine.ReusableData.MovementSpeedModifier = _movementData.RunData.SpeedModifier;
+        _stateMachine.ReusableData.MovementSpeedModifier = _sprintData.SpeedModifier;
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        if(_stateMachine.ReusableData.MovementInput == Vector2.zero)
+        
+        if (_stateMachine.ReusableData.MovementInput == Vector2.zero)
         {
-            OnIdle();
+            _stateMachine.ChangeState(_stateMachine.IdleState);
             return;
         }
+        
     }
-
-    #endregion
     
-
+    #endregion
     
 }

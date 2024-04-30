@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerDashState : PlayerGroundedState
 {
@@ -28,6 +29,33 @@ public class PlayerDashState : PlayerGroundedState
         _startTime = Time.time;
     }
 
+    public override void LogicUpdate()
+    {
+        base.LogicUpdate();
+        if(Time.time < _startTime + _dashData.DashDurationTime)
+            return;
+        if (_stateMachine.ReusableData.MovementInput == Vector2.zero)
+        {
+            _stateMachine.ChangeState(_stateMachine.IdleState);
+
+            return;
+        }
+        
+        _stateMachine.ChangeState(_stateMachine.SprintState);
+    }
+
+    // public override void OnAnimationTransitionEvent()
+    // {
+    //     if (_stateMachine.ReusableData.MovementInput == Vector2.zero)
+    //     {
+    //         _stateMachine.ChangeState(_stateMachine.IdleState);
+    //
+    //         return;
+    //     }
+    //     
+    //     _stateMachine.ChangeState(_stateMachine.SprintState);
+    // }
+
     #endregion
 
     #region Main Methods
@@ -54,28 +82,37 @@ public class PlayerDashState : PlayerGroundedState
     /// </summary>
     private void UpdateConsecutiveDashes()
     {
-        if (!IsConsecutive())
-        {
-            _consecutiveDashesUsed = 0;
-        }
+        // if (!IsConsecutive())
+        // {
+        //     _consecutiveDashesUsed = 0;
+        // }
+        //
+        // ++_consecutiveDashesUsed;
 
-        ++_consecutiveDashesUsed;
-
-        if (_consecutiveDashesUsed == _dashData.ConsecutiveDashedLimitAmount)
-        {
-            _consecutiveDashesUsed = 0;
-            
-            _stateMachine.Player.Input.DisableActionFor(_stateMachine.Player.Input._inputActions.Player.Dash,_dashData.DashLimitReachedCooldown);
-        }
+        // if (_consecutiveDashesUsed == _dashData.ConsecutiveDashedLimitAmount)
+        // {
+        //     _consecutiveDashesUsed = 0;
+        //     
+        //     _stateMachine.Player.Input.DisableActionFor(_stateMachine.Player.Input._inputActions.Player.Dash,_dashData.DashLimitReachedCooldown);
+        // }
     }
 
     /// <summary>
     /// 連続ダッシュのチェック
     /// </summary>
     /// <returns></returns>
-    private bool IsConsecutive()
+    // private bool IsConsecutive()
+    // {
+    //     return Time.time < _startTime + _dashData.TimeToBeConsideredConsecutive;
+    // }
+
+    #endregion
+
+    #region Input Methods
+
+    protected override void OnDashStarted(InputAction.CallbackContext context)
     {
-        return Time.time < _startTime + _dashData.TimeToBeConsideredConsecutive;
+        
     }
 
     #endregion

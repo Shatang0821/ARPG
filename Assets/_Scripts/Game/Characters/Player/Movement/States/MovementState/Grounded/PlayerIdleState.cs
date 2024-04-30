@@ -26,8 +26,8 @@ public class PlayerIdleState : PlayerGroundedState
         {
             return;
         }
-
-        OnMove();
+        
+        _stateMachine.ChangeState(_stateMachine.WalkState);
     }
 
     

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 public class PlayerWalkState : PlayerMovingState
@@ -24,7 +25,7 @@ public class PlayerWalkState : PlayerMovingState
 
         if (_stateMachine.ReusableData.MovementInput == Vector2.zero)
         {
-            OnIdle();
+            _stateMachine.ChangeState(_stateMachine.IdleState);
             return;
         }
     }
